@@ -3,7 +3,111 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Plan&Do</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>Plan&Do</h1>
+    </header>
+
+    <main>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2>Projects</h2>
+          <button id="new-project-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="new-project-icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span id="new-project-btn-tooltip">Add New Project</span>
+          </button>
+        </div>
+        <ul id="project-list">
+          <!-- Lista projektów będzie generowana dynamicznie -->
+        </ul>
+      </aside>
+
+      <!-- Główna sekcja -->
+      <section class="main-container">
+        <!-- Sekcja z listą zadań -->
+        <section class="todo-container">
+          <div class="todo-header">
+            <h2 id="current-project-title">Wybierz projekt</h2>
+            <button id="new-task-btn">+ Dodaj Zadanie</button>
+          </div>
+          <ul id="task-list">
+            <!-- Lista zadań będzie generowana dynamicznie -->
+          </ul>
+        </section>
+
+        <!-- Sekcja kalendarza -->
+        <section class="calendar-container hidden">
+          <div class="calendar-header">
+            <h2>Kalendarz</h2>
+            <button id="prev-period">&lt;</button>
+            <span id="calendar-period">Miesiąc</span>
+            <button id="next-period">&gt;</button>
+          </div>
+          <div class="calendar-controls">
+            <button class="view-btn" data-view="day">Dzień</button>
+            <button class="view-btn" data-view="week">Tydzień</button>
+            <button class="view-btn" data-view="month">Miesiąc</button>
+          </div>
+          <div id="calendar-view">
+            <!-- Widok kalendarza będzie generowany dynamicznie -->
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <!-- Modal do dodawania nowego projektu -->
+    <dialog id="project-modal">
+      <div class="modal-content">
+        <button class="close-modal">&times;</button>
+        <h2>New Project</h2>
+        <form id="project-form" method="dialog">
+          <label for="project-name">Project name:</label>
+          <input type="text" id="project-name" required />
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- Modal do dodawania nowego zadania -->
+    <dialog id="task-modal">
+      <div class="modal-content">
+        <button class="close-modal">&times;</button>
+        <h2>Nowe Zadanie</h2>
+        <form id="task-form" method="dialog">
+          <label for="task-title">Tytuł:</label>
+          <input type="text" id="task-title" required />
+
+          <label for="task-desc">Opis:</label>
+          <textarea id="task-desc"></textarea>
+
+          <label for="task-date">Termin:</label>
+          <input type="date" id="task-date" />
+
+          <label for="task-priority">Priorytet:</label>
+          <select id="task-priority">
+            <option value="low">Niski</option>
+            <option value="medium">Średni</option>
+            <option value="high">Wysoki</option>
+          </select>
+
+          <button type="submit">Dodaj</button>
+        </form>
+      </div>
+    </dialog>
+  </body>
 </html>
