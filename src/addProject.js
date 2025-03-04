@@ -5,13 +5,14 @@ import openProject from "./openProject";
 
 function addProject() {
   const projectList = document.getElementById("project-list");
+  const taskList = document.getElementById("task-list");
   const modalProject = document.getElementById("project-modal");
+  const projectForm = document.getElementById("project-form");
   const openProjectModalBtn = document.getElementById("new-project-btn");
   const closeModalBtn = document.querySelector(".close-modal");
   const projectNameInput = document.getElementById("project-name");
 
   let projects = getLocalStorage("projects") || [];
-  let selectedProjectId;
 
   // Funkcja do tworzenia nowego projektu
   const createProject = (name) => {
@@ -23,17 +24,23 @@ function addProject() {
     };
   };
 
-  // Renderowanie projektu w sidebarze
+  // **Renderowanie projektu w sidebarze (z unikalnym `data-id`)**
   const renderProject = (project) => {
+    // Sprawdzenie, czy projekt już istnieje w DOM (zapobiega duplikatom)
+    if (document.querySelector(`[data-id="${project.id}"]`)) return;
+
     const projectElement = document.createElement("li");
     projectElement.classList.add("project-element");
     projectElement.dataset.id = project.id; // ← Przypisanie ID
+
     const projectTitle = document.createElement("p");
     projectTitle.classList.add("project-element-name");
     projectTitle.textContent = project.name;
+
     const projectDate = document.createElement("p");
     projectDate.classList.add("project-element-date");
     projectDate.textContent = format(new Date(project.createdAt), "dd.MM.yyyy");
+
     projectElement.append(projectTitle, projectDate);
     projectList.append(projectElement);
   };
@@ -54,7 +61,7 @@ function addProject() {
   });
 
   // Obsługa dodawania nowego projektu
-  modalProject.addEventListener("submit", (e) => {
+  const handleProjectSubmit = (e) => {
     e.preventDefault();
 
     const projectName = projectNameInput.value;
@@ -62,19 +69,23 @@ function addProject() {
 
     const project = createProject(projectName);
     projects.push(project);
-    selectedProjectId = project.id;
+
+    // **Zapis nowego projektu do localStorage**
+    setLocalStorage("projects", projects);
+    setLocalStorage("projectId", project.id);
 
     renderProject(project);
-    setLocalStorage("projects", projects);
-    setLocalStorage("projectId", selectedProjectId);
-
-    // Reset inputa
-    projectNameInput.value = "";
-
     openProject();
 
+    // Reset inputa i zamknięcie modala
+    projectNameInput.value = "";
+    taskList.textContent = "";
     modalProject.close();
-  });
+  };
+
+  // **Zapobiegamy wielokrotnemu dodawaniu eventListenera na `submit`**
+  projectForm.removeEventListener("submit", handleProjectSubmit);
+  projectForm.addEventListener("submit", handleProjectSubmit);
 
   // renderowanie danych po inicjalizacji aplikacji
   if (projects.length > 0) {

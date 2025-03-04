@@ -1,17 +1,16 @@
 import getLocalStorage from "./getLocalStorage";
 import setLocalStorage from "./setLocalStorage";
+import addTask from "./addTask";
 
 function openProject() {
   const projects = getLocalStorage("projects");
   const projectName = document.getElementById("current-project-title");
   const toDo = document.querySelector(".todo-container");
-  const modalTask = document.getElementById("task-modal");
-  const openTaskModalBtn = document.getElementById("new-task-btn");
-  const closeModalBtn = document.querySelector(".close-modal-task");
+  let project;
 
   if (projects.length > 0) {
     let lastProjectId = getLocalStorage("projectId");
-    let project = projects.find((project) => project.id === lastProjectId);
+    project = projects.find((project) => project.id === lastProjectId);
     if (!project) {
       // Jeśli ID nie istnieje w `projects`, wybierz pierwszy projekt
       project = projects[0];
@@ -36,21 +35,6 @@ function openProject() {
     <p>Create Project</p>`;
     toDo.append(createProject);
   }
-
-  // Obsługa otwierania modala
-  openTaskModalBtn.addEventListener("click", () => {
-    modalTask.showModal();
-  });
-
-  // Obsługa zamykania modala przyciskiem
-  closeModalBtn.addEventListener("click", () => {
-    modalTask.close(); // Zamyka modal
-  });
-
-  // Obsługa zamykania modala przy kliknięciu na tło
-  modalTask.addEventListener("click", (e) => {
-    if (e.target === modalTask) modalTask.close();
-  });
 }
 
 const handleProjectClick = (e) => {
@@ -84,14 +68,43 @@ const renderTask = (project) => {
   document.querySelector(".no-project")?.remove();
   const taskList = document.getElementById("task-list");
   const projectName = document.getElementById("current-project-title");
+
   taskList.innerHTML = ""; // Czyści stare zadania
+  projectName.textContent = project.name;
+
+  // **Jeśli lista zadań jest pusta, dodajemy komunikat**
+  if (project.tasks.length === 0) {
+    const noTask = document.createElement("div");
+    noTask.classList.add("no-project");
+    noTask.innerHTML = `<p>No tasks in this project</p>`;
+    taskList.append(noTask);
+    return; // **Zatrzymujemy dalsze działanie funkcji**
+  }
+
   project.tasks.forEach((element) => {
     const task = document.createElement("li");
     task.classList.add("task");
-    task.textContent = element;
+    task.dataset.id = element.id; // Dodanie unikalnego ID dla zadania
+    task.classList.add(`priority-${element.priority}`); // Dodanie klasy do stylizacji
+
+    const taskTitle = document.createElement("h3");
+    taskTitle.textContent = element.name;
+
+    const taskDesc = document.createElement("p");
+    taskDesc.textContent = element.description || "No description";
+
+    const taskDate = document.createElement("p");
+    taskDate.textContent = element.date
+      ? `Due: ${element.date}`
+      : "No due date";
+
+    const taskPriority = document.createElement("p");
+    taskPriority.textContent = `Priority: ${element.priority}`;
+
+    // **Dodanie elementów do `task`**
+    task.append(taskTitle, taskDesc, taskDate, taskPriority);
     taskList.append(task);
   });
-  projectName.textContent = project.name;
 };
 
 export default openProject;
