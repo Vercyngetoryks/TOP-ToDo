@@ -1,8 +1,9 @@
 import { format } from "date-fns";
 import setLocalStorage from "./setLocalStorage";
 import getLocalStorage from "./getLocalStorage";
+import openProject from "./openProject";
 
-function addProject(e) {
+function addProject() {
   const projectList = document.getElementById("project-list");
   const modalProject = document.getElementById("project-modal");
   const openProjectModalBtn = document.getElementById("new-project-btn");
@@ -10,6 +11,7 @@ function addProject(e) {
   const projectNameInput = document.getElementById("project-name");
 
   let projects = getLocalStorage("projects") || [];
+  let selectedProjectId;
 
   // Funkcja do tworzenia nowego projektu
   const createProject = (name) => {
@@ -25,6 +27,7 @@ function addProject(e) {
   const renderProject = (project) => {
     const projectElement = document.createElement("li");
     projectElement.classList.add("project-element");
+    projectElement.dataset.id = project.id; // ← Przypisanie ID
     const projectTitle = document.createElement("p");
     projectTitle.classList.add("project-element-name");
     projectTitle.textContent = project.name;
@@ -34,16 +37,6 @@ function addProject(e) {
     projectElement.append(projectTitle, projectDate);
     projectList.append(projectElement);
   };
-
-  // Pobranie zapisanych projektów z localStorage
-  // const getLocalStorage = () => {
-  //   projects.forEach((work) => {
-  //     renderProject(work);
-  //   });
-  //   // if (projects.length === 0) {
-  //   //   clearBtn.classList.add("hidden");
-  //   // }
-  // };
 
   // Obsługa otwierania modala
   openProjectModalBtn.addEventListener("click", () => {
@@ -69,12 +62,16 @@ function addProject(e) {
 
     const project = createProject(projectName);
     projects.push(project);
+    selectedProjectId = project.id;
 
     renderProject(project);
     setLocalStorage("projects", projects);
+    setLocalStorage("projectId", selectedProjectId);
 
     // Reset inputa
     projectNameInput.value = "";
+
+    openProject();
 
     modalProject.close();
   });

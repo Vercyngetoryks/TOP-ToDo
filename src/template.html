@@ -42,7 +42,7 @@
         <!-- Sekcja z listą zadań -->
         <section class="todo-container">
           <div class="todo-header">
-            <h2 id="current-project-title">Wybierz projekt</h2>
+            <h2 id="current-project-title">Project name</h2>
             <button id="new-task-btn">+ Dodaj Zadanie</button>
           </div>
           <ul id="task-list">
@@ -86,26 +86,34 @@
     <!-- Modal do dodawania nowego zadania -->
     <dialog id="task-modal">
       <div class="modal-content">
-        <button class="close-modal">&times;</button>
-        <h2>Nowe Zadanie</h2>
+        <button class="close-modal-task">&times;</button>
+        <h2>New Task</h2>
         <form id="task-form" method="dialog">
-          <label for="task-title">Tytuł:</label>
-          <input type="text" id="task-title" required />
+          <div>
+            <label for="task-title">Title:</label>
+            <input type="text" id="task-title" required />
+          </div>
 
-          <label for="task-desc">Opis:</label>
-          <textarea id="task-desc"></textarea>
+          <div>
+            <label for="task-desc">Description:</label>
+            <textarea id="task-desc"></textarea>
+          </div>
 
-          <label for="task-date">Termin:</label>
-          <input type="date" id="task-date" />
+          <div>
+            <label for="task-date">Deadline:</label>
+            <input type="date" id="task-date" />
+          </div>
 
-          <label for="task-priority">Priorytet:</label>
-          <select id="task-priority">
-            <option value="low">Niski</option>
-            <option value="medium">Średni</option>
-            <option value="high">Wysoki</option>
-          </select>
+          <div>
+            <label for="task-priority">Priority:</label>
+            <select id="task-priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
 
-          <button type="submit">Dodaj</button>
+          <button type="submit">Add</button>
         </form>
       </div>
     </dialog>

@@ -56,13 +56,15 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+/* project view  */
+
 header h1 {
   text-align: center;
   font-size: 4.4rem;
 }
 
 main {
-  height: 900vh;
+  height: 90vh;
   display: grid;
   grid-template-columns: 300px 1fr;
 }
@@ -130,12 +132,12 @@ main {
   cursor: pointer;
 }
 
-.main-container {
-  padding: 2rem;
-  border: 1px solid black;
+.project-element:hover {
+  color: red;
 }
 
-#project-modal {
+#project-modal,
+#task-modal {
   width: 40%;
   max-width: 50rem;
   position: fixed;
@@ -152,11 +154,12 @@ main {
 .modal-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .modal-content h2 {
-  font-size: 20px;
+  text-align: center;
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
@@ -166,14 +169,16 @@ main {
   align-items: center;
 }
 
-.modal-content input {
+#project-form input {
   padding: 8px;
-  font-size: 1.6rem;
+  font-size: 2rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 50%;
 }
 
 .modal-content label {
+  font-weight: 700;
   font-size: 1.6rem;
 }
 
@@ -188,6 +193,16 @@ main {
   cursor: pointer;
 }
 
+#task-form input,
+#task-form textarea,
+#task-form select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
 dialog {
   animation: fade-out 0.7s ease-out;
 }
@@ -198,6 +213,35 @@ dialog[open] {
 
 dialog[open]::backdrop {
   animation: backdrop-fade-in 0.7s ease-out forwards;
+}
+
+.main-container {
+  display: flex;
+  padding: 2rem;
+  border: 1px solid black;
+}
+
+.todo-container {
+  border: 1px solid black;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.todo-header {
+  align-self: flex-start;
+  justify-self: flex-start;
+}
+
+.create-project,
+.no-project {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4.4rem;
+  color: grey;
 }
 
 .hidden {
