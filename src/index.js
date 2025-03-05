@@ -1,8 +1,13 @@
 import "./styles.css";
 import addProject from "./addProject";
 import openProject from "./openProject";
-import handleTaskSubmit from "./addTask";
+import addTask from "./addTask";
+import handleProjectClick from "./handleProjectClick";
 
 addProject();
 openProject();
-handleTaskSubmit();
+addTask();
+
+document
+  .getElementById("project-list")
+  .addEventListener("click", handleProjectClick);
