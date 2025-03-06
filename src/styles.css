@@ -85,7 +85,9 @@ main {
 }
 
 #new-project-btn,
-#new-task-btn {
+#new-task-btn,
+.task-delete-btn,
+.task-edit-btn {
   position: relative;
   font-size: 1.6rem;
   padding: 0.5rem 1rem;
@@ -95,7 +97,10 @@ main {
 }
 
 #new-project-btn-tooltip,
-#new-task-btn-tooltip {
+#new-task-btn-tooltip,
+#delete-task-btn-tooltip,
+#edit-task-btn-tooltip {
+  font-family: "Inter", sans-serif;
   position: absolute;
   bottom: 120%;
   left: 50%;
@@ -112,7 +117,9 @@ main {
 }
 
 #new-project-btn:hover #new-project-btn-tooltip,
-#new-task-btn:hover #new-task-btn-tooltip {
+#new-task-btn:hover #new-task-btn-tooltip,
+.task-delete-btn:hover #delete-task-btn-tooltip,
+.task-edit-btn:hover #edit-task-btn-tooltip {
   opacity: 1;
   visibility: visible;
 }

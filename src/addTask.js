@@ -7,7 +7,18 @@ function addTask() {
   const closeModalBtn = document.querySelector(".close-modal-task");
 
   // **Obsługa otwierania i zamykania modala**
-  openTaskModalBtn.addEventListener("click", () => modalTask.showModal());
+  openTaskModalBtn.addEventListener("click", () => {
+    // Resetowanie pól przed otwarciem modala
+    document.getElementById("task-title").value = "";
+    document.getElementById("task-desc").value = "";
+    document.getElementById("task-date").value = "";
+    document.getElementById("task-priority").value = "low";
+
+    // 🚨 Usuwamy dataset.taskId, żeby nie przechodził tryb edycji!
+    delete modalTask.dataset.taskId;
+
+    modalTask.showModal();
+  });
   closeModalBtn.addEventListener("click", () => modalTask.close());
   modalTask.addEventListener("click", (e) => {
     if (e.target === modalTask) modalTask.close();

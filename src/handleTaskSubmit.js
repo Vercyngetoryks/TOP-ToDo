@@ -6,6 +6,15 @@ import createTask from "./createTask";
 const handleTaskSubmit = (e) => {
   e.preventDefault();
 
+  // Pobranie ID aktualnego projektu
+  const projectId = Number(getLocalStorage("projectId"));
+  const projects = getLocalStorage("projects");
+  const project = projects.find((project) => project.id === projectId);
+  if (!project) {
+    alert("Projekt nie został znaleziony:", projectId);
+    return;
+  }
+
   const taskNameInput = document.getElementById("task-title");
   const taskDescInput = document.getElementById("task-desc");
   const taskDateInput = document.getElementById("task-date");
@@ -19,32 +28,32 @@ const handleTaskSubmit = (e) => {
   const taskDate = taskDateInput.value;
   const taskPriority = taskPriorityInput.value;
 
-  const task = createTask(taskName, taskDesc, taskDate, taskPriority);
+  // **Sprawdzamy, czy to edycja**
+  const taskId = Number(modalTask.dataset.taskId) || null;
 
-  // Pobranie ID aktualnego projektu
-  const projectId = Number(getLocalStorage("projectId"));
-  const projects = getLocalStorage("projects");
+  if (taskId) {
+    // **Tryb edycji**
+    const task = project.tasks.find((task) => task.id === taskId);
+    if (!task) return;
 
-  const project = projects.find((project) => project.id === projectId);
-
-  if (!project) {
-    console.error("Projekt nie został znaleziony:", projectId);
-    return;
+    task.name = taskName;
+    task.description = taskDesc;
+    task.date = taskDate;
+    task.priority = taskPriority;
+  } else {
+    // **Tryb tworzenia nowego zadania**
+    const task = createTask(taskName, taskDesc, taskDate, taskPriority);
+    project.tasks.push(task);
   }
 
-  // Dodanie zadania do projektu i zapis do localStorage
-  project.tasks.push(task);
+  // **Zapis do `localStorage`**
   setLocalStorage("projects", projects);
 
-  // Reset inputów
-  taskNameInput.value = "";
-  taskDescInput.value = "";
-  taskDateInput.value = "";
-  taskPriorityInput.value = "low";
+  // **Resetujemy `dataset.taskId`, żeby kolejne otwarcie było dla nowego taska**
+  delete modalTask.dataset.taskId;
 
-  // Zamknięcie modala i odświeżenie widoku projektu
+  // **Zamykamy modal i odświeżamy widok projektu**
   modalTask.close();
   openProject();
 };
-
 export default handleTaskSubmit;
