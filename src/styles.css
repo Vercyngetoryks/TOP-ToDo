@@ -58,20 +58,45 @@ body {
 
 /* project view  */
 
-header h1 {
-  text-align: center;
-  font-size: 4.4rem;
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px; /* Dopasuj wysokość */
+}
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1;
+  position: relative;
+}
+
+h1 span {
+  display: block;
+  position: relative;
+}
+
+h1 span:nth-child(2) {
+  margin-left: 100px; /* Przesunięcie "&" w lewo */
+}
+
+h1 span:nth-child(3) {
+  margin-left: 145px; /* Przesunięcie "Do" jeszcze bardziej w lewo */
 }
 
 main {
   height: 90vh;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 400px 1fr;
 }
 
 .sidebar {
   padding: 2rem;
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .sidebar-header {
@@ -237,11 +262,10 @@ dialog[open]::backdrop {
 .main-container {
   display: flex;
   padding: 2rem;
-  border: 1px solid black;
+  border-top: 1px solid black;
 }
 
 .todo-container {
-  border: 1px solid black;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -251,12 +275,58 @@ dialog[open]::backdrop {
 .todo-header {
   display: flex;
   gap: 2rem;
-  align-self: flex-start;
-  justify-self: flex-start;
+  /* align-self: flex-start; */
+  /* justify-self: flex-start; */
+  align-items: center;
 }
 
 .todo-header h2 {
   font-size: 2.8rem;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+/* Stylizacja etykiety */
+.sort-container label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  color: #333;
+}
+
+/* Stylizacja select */
+#sort-tasks {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Efekt hover */
+#sort-tasks:hover {
+  border-color: #666;
+}
+
+/* Efekt focus */
+#sort-tasks:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Opcje w select */
+#sort-tasks option {
+  background: #fff;
+  color: #333;
+  font-size: 1rem;
 }
 
 .create-project,
@@ -290,15 +360,15 @@ dialog[open]::backdrop {
 }
 
 .priority-low {
-  border-left: 5px solid green;
+  border-left: 10px solid green;
 }
 
 .priority-medium {
-  border-left: 5px solid orange;
+  border-left: 10px solid orange;
 }
 
 .priority-high {
-  border-left: 5px solid red;
+  border-left: 10px solid red;
 }
 
 .task-options {
@@ -319,6 +389,19 @@ dialog[open]::backdrop {
 .status-icon {
   width: 3rem;
   height: 3rem;
+}
+
+.overdue {
+  color: red;
+  font-weight: bold;
+}
+.today {
+  color: orange;
+  font-weight: bold;
+}
+.days-left {
+  color: green;
+  font-weight: bold;
 }
 
 .hidden {

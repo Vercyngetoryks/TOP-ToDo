@@ -3,17 +3,18 @@ import addProject from "./addProject";
 import openProject from "./openProject";
 import addTask from "./addTask";
 import handleProjectClick from "./handleProjectClick";
-import editTask from "./editTask";
-import deleteTask from "./deleteTask";
-import toggleTaskStatus from "./toggleTaskStatus";
+import handleTaskEvents from "./handleTaskEvents";
+import handleSortChange from "./handleSortChange";
 
 addProject();
 openProject();
 addTask();
-editTask();
-deleteTask();
-toggleTaskStatus();
+handleTaskEvents();
 
 document
   .getElementById("project-list")
   .addEventListener("click", handleProjectClick);
+
+document
+  .getElementById("sort-tasks")
+  .addEventListener("change", handleSortChange);

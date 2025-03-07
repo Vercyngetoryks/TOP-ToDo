@@ -1,5 +1,6 @@
 import getStatusIcon from "./getStatusIcon";
 import getStatusColor from "./getStatusColor";
+import { differenceInDays, parseISO, startOfDay } from "date-fns";
 
 const renderTask = (project) => {
   document.querySelector(".no-project")?.remove();
@@ -38,9 +39,23 @@ const renderTask = (project) => {
     taskDesc.textContent = element.description || "No description";
 
     const taskDate = document.createElement("p");
-    taskDate.textContent = element.date
-      ? `Due: ${element.date}`
-      : "No due date";
+    if (element.date) {
+      const dueDate = parseISO(element.date);
+      const today = startOfDay(new Date());
+      const daysLeft = differenceInDays(dueDate, today);
+
+      if (daysLeft < 0) {
+        taskDate.innerHTML = `Due: ${
+          element.date
+        } <span class="overdue">(${Math.abs(daysLeft)} days overdue!)</span>`;
+      } else if (daysLeft === 0) {
+        taskDate.innerHTML = `Due: ${element.date} <span class="today">(Today!)</span>`;
+      } else {
+        taskDate.innerHTML = `Due: ${element.date} <span class="days-left">(${daysLeft} days left)</span>`;
+      }
+    } else {
+      taskDate.textContent = "No due date";
+    }
 
     const taskPriority = document.createElement("p");
     taskPriority.textContent = `Priority: ${element.priority}`;
