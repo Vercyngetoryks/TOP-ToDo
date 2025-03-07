@@ -1,3 +1,6 @@
+import getStatusIcon from "./getStatusIcon";
+import getStatusColor from "./getStatusColor";
+
 const renderTask = (project) => {
   document.querySelector(".no-project")?.remove();
   const taskList = document.getElementById("task-list");
@@ -63,10 +66,17 @@ const renderTask = (project) => {
         <span id="edit-task-btn-tooltip">Edit Task</span>
         `;
 
+    const taskStatusBtn = document.createElement("button");
+    taskStatusBtn.classList.add("task-status-btn");
+    taskStatusBtn.innerHTML = `${getStatusIcon(element.status)}`;
+
+    // Zmieniamy kolor tła
+    task.style.backgroundColor = getStatusColor(element.status);
+
     // **Dodanie elementów do `task`**
     taskDetails.append(taskDate, taskPriority);
     taskContainer.append(taskTitle, taskDesc, taskDetails);
-    taskOptions.append(taskEditBtn, taskDelBtn);
+    taskOptions.append(taskStatusBtn, taskEditBtn, taskDelBtn);
     task.append(taskContainer, taskOptions);
     taskList.append(task);
   });

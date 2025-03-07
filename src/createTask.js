@@ -4,7 +4,7 @@ const createTask = (name, description, date, priority) => ({
   description,
   date,
   priority,
-  completed: false, // Dodajemy domyślną wartość dla statusu
+  status: "pending", // Dodajemy domyślną wartość dla statusu
 });
 
 export default createTask;
