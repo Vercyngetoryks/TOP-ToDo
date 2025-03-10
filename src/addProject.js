@@ -12,6 +12,11 @@ function addProject() {
 
   // **Obsługa otwierania modala**
   openProjectModalBtn.addEventListener("click", () => {
+    // 🚨 Usuwamy dataset.taskId, żeby nie przechodził tryb edycji!
+    delete modalProject.dataset.projectId;
+
+    // Resetowanie pól przed otwarciem modala
+    document.getElementById("project-name").value = "";
     modalProject.showModal();
   });
 
@@ -26,6 +31,7 @@ function addProject() {
   projectForm.addEventListener("submit", handleProjectSubmit);
 
   // **Renderowanie zapisanych projektów po starcie**
+  document.getElementById("project-list").innerHTML = ""; // Czyści listę
   projects.forEach((project) => renderProject(project));
 }
 

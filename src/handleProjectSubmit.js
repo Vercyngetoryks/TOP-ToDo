@@ -15,19 +15,36 @@ const handleProjectSubmit = (e) => {
   const projectName = projectNameInput.value.trim();
   if (!projectName) return;
 
-  const project = createProject(projectName);
-  projects.push(project);
+  // **Sprawdzamy, czy to edycja**
+  const projectId = Number(modalProject.dataset.projectId) || null;
+
+  let project;
+
+  if (projectId) {
+    // **Tryb edycji**
+    project = projects.find((project) => project.id === projectId);
+    if (!project) return;
+
+    project.name = projectName;
+  } else {
+    project = createProject(projectName);
+    projects.push(project);
+    setLocalStorage("projectId", project.id); // Nowy projekt powinien być aktywny
+  }
 
   // **Zapisujemy nowy projekt**
   setLocalStorage("projects", projects);
-  setLocalStorage("projectId", project.id);
 
-  // **Renderowanie nowego projektu**
-  renderProject(project);
+  // **Odświeżamy listę projektów**
+  document.getElementById("project-list").innerHTML = ""; // Czyści listę
+  projects.forEach((p) => renderProject(p));
+
+  // **Odświeżamy widok**
   openProject();
 
   // **Reset inputa i zamknięcie modala**
   projectNameInput.value = "";
+  delete modalProject.dataset.projectId; // Usuwamy flagę edycji
   modalProject.close();
 };
 

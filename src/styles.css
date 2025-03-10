@@ -111,6 +111,7 @@ main {
 
 #new-project-btn,
 #new-task-btn,
+.edit-project-name-btn,
 .task-delete-btn,
 .task-edit-btn,
 .task-status-btn {
@@ -123,6 +124,7 @@ main {
 }
 
 #new-project-btn-tooltip,
+#edit-project-btn-tooltip,
 #new-task-btn-tooltip,
 #delete-task-btn-tooltip,
 #edit-task-btn-tooltip,
@@ -144,6 +146,7 @@ main {
 }
 
 #new-project-btn:hover #new-project-btn-tooltip,
+.edit-project-name-btn:hover #edit-project-btn-tooltip,
 #new-task-btn:hover #new-task-btn-tooltip,
 .task-delete-btn:hover #delete-task-btn-tooltip,
 .task-edit-btn:hover #edit-task-btn-tooltip,
@@ -153,6 +156,7 @@ main {
 }
 
 .new-project-icon,
+.project-edit-btn-icon,
 .new-task-icon {
   width: 28px;
   height: 28px;
@@ -273,6 +277,10 @@ dialog[open]::backdrop {
 }
 
 .todo-header {
+  display: none;
+}
+
+.todo-header.visible {
   display: flex;
   gap: 2rem;
   /* align-self: flex-start; */
