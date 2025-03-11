@@ -1,5 +1,4 @@
 import getLocalStorage from "./getLocalStorage";
-import addProject from "./addProject";
 
 const editProjectName = (e) => {
   if (e.target.closest(".edit-project-name-btn")) {

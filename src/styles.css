@@ -1,12 +1,15 @@
+/* Reset & Base Styles */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
 * {
   margin: 0;
   padding: 0;
 }
+
 html {
   font-size: 62.5%;
 }
@@ -14,7 +17,10 @@ html {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  font-family: "Inter", sans-serif;
 }
+
+/* Base Element Styles */
 img,
 picture,
 video,
@@ -23,12 +29,15 @@ svg {
   display: block;
   max-width: 100%;
 }
+
 input,
 button,
 textarea,
 select {
   font: inherit;
 }
+
+/* Typography */
 p,
 h1,
 h2,
@@ -38,9 +47,11 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
 p {
   text-wrap: pretty;
 }
+
 h1,
 h2,
 h3,
@@ -50,53 +61,63 @@ h6 {
   text-wrap: balance;
 }
 
+/* Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Patrick+Hand&display=swap");
 
-body {
-  font-family: "Inter", sans-serif;
-}
-
-/* project view  */
-
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 150px; /* Dopasuj wysokość */
-}
-
-h1 {
-  display: flex;
-  flex-direction: column;
-  font-size: 4rem;
-  font-weight: bold;
-  line-height: 1;
-  position: relative;
-}
-
-h1 span {
-  display: block;
-  position: relative;
-}
-
-h1 span:nth-child(2) {
-  margin-left: 100px; /* Przesunięcie "&" w lewo */
-}
-
-h1 span:nth-child(3) {
-  margin-left: 145px; /* Przesunięcie "Do" jeszcze bardziej w lewo */
-}
-
+/* Layout Structure */
 main {
   height: 90vh;
   display: grid;
   grid-template-columns: 400px 1fr;
 }
 
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+}
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  font-size: 3.6rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #2d3436;
+}
+
+h1 span {
+  display: block;
+  position: relative;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+h1 span:first-child {
+  margin-left: -100px;
+}
+
+h1 span:nth-child(2) {
+  margin-left: 50px;
+}
+
+h1 span:nth-child(3) {
+  margin-left: 150px;
+}
+
+/* Sidebar Styles */
 .sidebar {
-  padding: 2rem;
-  border-top: 1px solid black;
-  border-right: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 2.4rem;
+  border-right: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  position: relative;
 }
 
 .sidebar-header {
@@ -109,8 +130,38 @@ main {
   font-size: 2.8rem;
 }
 
+.project-header-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+#project-list,
+#task-list {
+  list-style: none;
+}
+
+.project-element {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Patrick Hand", serif;
+  font-size: 2.2rem;
+  margin-bottom: 1.6rem;
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.project-element:hover {
+  color: #e74c3c;
+  background-color: #f8f9fa;
+  transform: translateX(4px);
+}
+
+/* Button Styles */
 #new-project-btn,
 #new-task-btn,
+#delete-project-btn,
 .edit-project-name-btn,
 .task-delete-btn,
 .task-edit-btn,
@@ -123,9 +174,19 @@ main {
   background: none;
 }
 
+.new-project-icon,
+.delete-project-btn-icon,
+.project-edit-btn-icon,
+.new-task-icon {
+  width: 28px;
+  height: 28px;
+}
+
+/* Tooltip Styles */
 #new-project-btn-tooltip,
 #edit-project-btn-tooltip,
 #new-task-btn-tooltip,
+#delete-project-btn-tooltip,
 #delete-task-btn-tooltip,
 #edit-task-btn-tooltip,
 #status-tooltip {
@@ -143,9 +204,11 @@ main {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out;
+  z-index: 2000;
 }
 
 #new-project-btn:hover #new-project-btn-tooltip,
+#delete-project-btn:hover #delete-project-btn-tooltip,
 .edit-project-name-btn:hover #edit-project-btn-tooltip,
 #new-task-btn:hover #new-task-btn-tooltip,
 .task-delete-btn:hover #delete-task-btn-tooltip,
@@ -155,37 +218,165 @@ main {
   visibility: visible;
 }
 
-.new-project-icon,
-.project-edit-btn-icon,
-.new-task-icon {
-  width: 28px;
-  height: 28px;
+/* Main Content Area */
+.main-container {
+  display: flex;
+  padding: 2rem;
 }
 
-#project-list,
-#task-list {
-  list-style: none;
-}
-
-.project-element {
+.todo-header-container {
   display: flex;
   justify-content: space-between;
-  font-family: "Patrick Hand", serif;
-  font-size: 2.4rem;
-  margin-bottom: 1.6rem;
+  align-items: center;
+}
+
+.todo-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.todo-header {
+  display: none;
+}
+
+.todo-header.visible {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.project-name-container {
+  display: flex;
+  gap: 1rem;
+  background: #eee;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.todo-header h2 {
+  font-size: 2.8rem;
+}
+
+/* Sort Controls */
+.sort-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.sort-container label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  color: #333;
+}
+
+#sort-tasks {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-.project-element:hover {
+#sort-tasks:hover {
+  border-color: #666;
+}
+
+#sort-tasks:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#sort-tasks option {
+  background: #fff;
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Task Styles */
+#task-list {
+  padding: 1rem;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.8rem;
+  font-family: "Patrick Hand", serif;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-details {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.task-options {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.task-delete-btn-icon,
+.task-edit-btn-icon,
+.status-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Priority Styles */
+.priority-low {
+  border-left: 6px solid #00b894;
+}
+
+.priority-medium {
+  border-left: 6px solid #fdcb6e;
+}
+
+.priority-high {
+  border-left: 6px solid #ff7675;
+}
+
+/* Status Styles */
+.overdue {
   color: red;
+  font-weight: bold;
 }
 
-/* Modale */
+.today {
+  color: orange;
+  font-weight: bold;
+}
 
+.days-left {
+  color: green;
+  font-weight: bold;
+}
+
+/* Modal Styles */
 #project-modal,
 #task-modal {
-  width: 40%;
-  max-width: 50rem;
+  width: 45%;
+  max-width: 55rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -193,8 +384,8 @@ main {
   padding: 1rem;
   background: white;
   border: none;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .modal-content {
@@ -231,12 +422,16 @@ main {
 .modal-content button {
   font-size: 2rem;
   align-self: flex-end;
-  background: #007bff;
+  background: #0984e3;
   color: white;
   padding: 0.5rem 1.2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+}
+
+.modal-content button:hover {
+  background: #0870c0;
 }
 
 #task-form input,
@@ -249,92 +444,9 @@ main {
   font-size: 1rem;
 }
 
-dialog {
-  animation: fade-out 0.7s ease-out;
-}
-
-dialog[open] {
-  animation: fade-in 0.7s ease-out;
-}
-
-dialog[open]::backdrop {
-  animation: backdrop-fade-in 0.7s ease-out forwards;
-}
-
-/* Main view */
-
-.main-container {
-  display: flex;
-  padding: 2rem;
-  border-top: 1px solid black;
-}
-
-.todo-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.todo-header {
+/* Utility Classes */
+.hidden {
   display: none;
-}
-
-.todo-header.visible {
-  display: flex;
-  gap: 2rem;
-  /* align-self: flex-start; */
-  /* justify-self: flex-start; */
-  align-items: center;
-}
-
-.todo-header h2 {
-  font-size: 2.8rem;
-}
-
-.sort-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
-}
-
-/* Stylizacja etykiety */
-.sort-container label {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-right: 0.5rem;
-  color: #333;
-}
-
-/* Stylizacja select */
-#sort-tasks {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Efekt hover */
-#sort-tasks:hover {
-  border-color: #666;
-}
-
-/* Efekt focus */
-#sort-tasks:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* Opcje w select */
-#sort-tasks option {
-  background: #fff;
-  color: #333;
-  font-size: 1rem;
 }
 
 .create-project,
@@ -347,76 +459,18 @@ dialog[open]::backdrop {
   color: grey;
 }
 
-#task-list {
-  padding: 1rem;
+/* Animations */
+dialog {
+  animation: fade-out 0.7s ease-out;
 }
 
-.task {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  font-size: 2rem;
-  font-family: "Patrick Hand", serif;
+dialog[open] {
+  animation: fade-in 0.7s ease-out;
 }
 
-.task-details {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
+dialog[open]::backdrop {
+  animation: backdrop-fade-in 0.7s ease-out forwards;
 }
-
-.priority-low {
-  border-left: 10px solid green;
-}
-
-.priority-medium {
-  border-left: 10px solid orange;
-}
-
-.priority-high {
-  border-left: 10px solid red;
-}
-
-.task-options {
-  display: flex;
-  gap: 1.6rem;
-}
-
-.task-delete-btn,
-.task-edit-btn,
-.task-status-btn {
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
-.task-delete-btn-icon,
-.task-edit-btn-icon,
-.status-icon {
-  width: 3rem;
-  height: 3rem;
-}
-
-.overdue {
-  color: red;
-  font-weight: bold;
-}
-.today {
-  color: orange;
-  font-weight: bold;
-}
-.days-left {
-  color: green;
-  font-weight: bold;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Animation keyframes */
 
 @keyframes fade-in {
   0% {

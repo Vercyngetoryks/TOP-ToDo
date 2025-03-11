@@ -9,10 +9,18 @@ function openProject() {
   const toDo = document.querySelector(".todo-container");
   const todoHeader = document.querySelector(".todo-header");
   const editProjectBtn = document.querySelector(".edit-project-name-btn");
+  const deleteProjectBtn = document.getElementById("delete-project-btn");
+
+  // **🧹 Usuwanie poprzednich komunikatów**
+  document.querySelector(".no-project")?.remove();
+  document.querySelector(".create-project")?.remove();
+
   let project;
 
   if (projects.length > 0) {
+    deleteProjectBtn.classList.remove("hidden");
     if (todoHeader) todoHeader.classList.add("visible");
+
     let lastProjectId = getLocalStorage("projectId");
     project = projects.find((project) => project.id === lastProjectId);
     if (!project) {
@@ -20,14 +28,13 @@ function openProject() {
       setLocalStorage("projectId", project.id);
     }
     projectName.textContent = project.name;
+
     if (project.tasks && project.tasks.length > 0) {
       renderTask(project);
     } else {
-      document.querySelector(".no-project")?.remove();
       const noTask = document.createElement("div");
       noTask.classList.add("no-project");
       noTask.innerHTML = `<p>No tasks in this project</p>`;
-      document.querySelector(".create-project")?.remove();
       toDo.append(noTask);
     }
   } else {
@@ -36,6 +43,7 @@ function openProject() {
     createProject.innerHTML = `<p>Create Project</p>`;
     toDo.append(createProject);
     if (todoHeader) todoHeader.classList.remove("visible");
+    deleteProjectBtn.classList.add("hidden");
   }
 
   editProjectBtn.removeEventListener("click", editProjectName);

@@ -9,7 +9,7 @@ const renderTask = (project) => {
   const toDo = document.querySelector(".todo-container");
 
   taskList.innerHTML = ""; // Czyści stare zadania
-  projectName.textContent = `Tasks for ${project.name}`;
+  projectName.textContent = project.name;
 
   // **Jeśli lista zadań jest pusta, dodajemy komunikat**
   if (project.tasks.length === 0) {

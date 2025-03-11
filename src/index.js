@@ -5,6 +5,7 @@ import addTask from "./addTask";
 import handleProjectClick from "./handleProjectClick";
 import handleTaskEvents from "./handleTaskEvents";
 import handleSortChange from "./handleSortChange";
+import deleteProject from "./deleteProject";
 
 addProject();
 openProject();
@@ -18,3 +19,7 @@ document
 document
   .getElementById("sort-tasks")
   .addEventListener("change", handleSortChange);
+
+document
+  .getElementById("delete-project-btn")
+  .addEventListener("click", deleteProject);
