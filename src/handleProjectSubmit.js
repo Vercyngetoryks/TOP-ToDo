@@ -30,14 +30,11 @@ const handleProjectSubmit = (e) => {
     project = createProject(projectName);
     projects.push(project);
     setLocalStorage("projectId", project.id); // Nowy projekt powinien być aktywny
+    renderProject(project);
   }
 
   // **Zapisujemy nowy projekt**
   setLocalStorage("projects", projects);
-
-  // **Odświeżamy listę projektów**
-  document.getElementById("project-list").innerHTML = ""; // Czyści listę
-  projects.forEach((p) => renderProject(p));
 
   // **Odświeżamy widok**
   openProject();

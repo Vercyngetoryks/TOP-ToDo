@@ -12,12 +12,14 @@
 
 html {
   font-size: 62.5%;
+  overflow-x: hidden;
 }
 
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: "Inter", sans-serif;
+  overflow-x: hidden;
 }
 
 /* Base Element Styles */
@@ -66,21 +68,44 @@ h6 {
 
 /* Layout Structure */
 main {
-  height: 90vh;
+  height: 100vh;
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: minmax(300px, 400px) 1fr;
+  min-width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+#toggle-view-btn {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  font-size: 1.6rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+.toggle-view-icon {
+  width: 40px;
+  height: 40px;
 }
 
 /* Header Styles */
 header {
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 150px;
+  width: 100%;
   background-color: #f8f9fa;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1000;
+  padding: 0 20px;
+  flex-wrap: wrap;
 }
 
 h1 {
@@ -99,7 +124,7 @@ h1 span {
 }
 
 h1 span:first-child {
-  margin-left: -100px;
+  margin-left: -180px;
 }
 
 h1 span:nth-child(2) {
@@ -107,7 +132,7 @@ h1 span:nth-child(2) {
 }
 
 h1 span:nth-child(3) {
-  margin-left: 150px;
+  margin-left: 250px;
 }
 
 /* Sidebar Styles */
@@ -189,7 +214,8 @@ h1 span:nth-child(3) {
 #delete-project-btn-tooltip,
 #delete-task-btn-tooltip,
 #edit-task-btn-tooltip,
-#status-tooltip {
+#status-tooltip,
+#toggle-view-btn-tooltip {
   font-family: "Inter", sans-serif;
   position: absolute;
   bottom: 120%;
@@ -213,7 +239,8 @@ h1 span:nth-child(3) {
 #new-task-btn:hover #new-task-btn-tooltip,
 .task-delete-btn:hover #delete-task-btn-tooltip,
 .task-edit-btn:hover #edit-task-btn-tooltip,
-.task-status-btn:hover #status-tooltip {
+.task-status-btn:hover #status-tooltip,
+#toggle-view-btn:hover #toggle-view-btn-tooltip {
   opacity: 1;
   visibility: visible;
 }
@@ -222,12 +249,7 @@ h1 span:nth-child(3) {
 .main-container {
   display: flex;
   padding: 2rem;
-}
-
-.todo-header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
 }
 
 .todo-container {
@@ -457,6 +479,168 @@ h1 span:nth-child(3) {
   align-items: center;
   font-size: 4.4rem;
   color: grey;
+}
+
+/* Calendar Styles */
+
+.calendar-container {
+  display: none; /* Domyślnie ukryty kalendarz */
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+.calendar-container.visible {
+  display: flex; /* Aktywujemy tylko, gdy klasa 'visible' jest dodana */
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-family: "Patrick Hand", serif;
+  font-size: 2.4rem;
+}
+
+#prev-month-btn,
+#next-month-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #b8b8b8;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 3.4rem;
+  height: 3.4rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+#prev-month-btn:hover,
+#next-month-btn:hover {
+  transform: scale(1.1);
+}
+
+.select-month-icon {
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(50px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.calendar-day-header {
+  font-weight: bold;
+  background-color: #f0f0f0;
+  padding: 5px;
+}
+
+.calendar-day,
+.calendar-empty {
+  padding: 10px;
+  border-radius: 5px;
+  height: 100px;
+}
+
+.calendar-day {
+  background: #f3f3f3;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.calendar-empty {
+  background: #e0e0e0;
+}
+
+.today-calendar {
+  border: 5px solid #ffcc00;
+  font-weight: bold;
+}
+
+/* Stylizacja tasków w dniu */
+.task-item {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding: 0.2rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+/* Przycisk "Show more" */
+.show-more-btn {
+  font-size: 1rem;
+  color: blue;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.show-more-btn:hover {
+  text-decoration: underline;
+}
+
+/* Popup z pełną listą tasków */
+.task-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  max-width: 300px;
+  text-align: center;
+}
+
+/* Lista w popupie */
+.task-popup ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.task-popup li {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 4px;
+}
+
+.task-popup li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* Przycisk zamykania */
+.close-popup-btn {
+  margin-top: 0.5rem;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-popup-btn:hover {
+  background: #c0392b;
 }
 
 /* Animations */

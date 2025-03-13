@@ -6,11 +6,14 @@ import handleProjectClick from "./handleProjectClick";
 import handleTaskEvents from "./handleTaskEvents";
 import handleSortChange from "./handleSortChange";
 import deleteProject from "./deleteProject";
-
+import toggleView from "./toggleView";
+import renderCalendar from "./calendarView";
 addProject();
 openProject();
 addTask();
 handleTaskEvents();
+toggleView();
+renderCalendar();
 
 document
   .getElementById("project-list")

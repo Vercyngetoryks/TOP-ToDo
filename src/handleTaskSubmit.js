@@ -2,6 +2,7 @@ import setLocalStorage from "./setLocalStorage";
 import getLocalStorage from "./getLocalStorage";
 import openProject from "./openProject";
 import createTask from "./createTask";
+import renderCalendar from "./calendarView";
 
 const handleTaskSubmit = (e) => {
   e.preventDefault();
@@ -55,5 +56,6 @@ const handleTaskSubmit = (e) => {
   // **Zamykamy modal i odświeżamy widok projektu**
   modalTask.close();
   openProject();
+  renderCalendar(new Date());
 };
 export default handleTaskSubmit;

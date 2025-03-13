@@ -10,10 +10,12 @@ function openProject() {
   const todoHeader = document.querySelector(".todo-header");
   const editProjectBtn = document.querySelector(".edit-project-name-btn");
   const deleteProjectBtn = document.getElementById("delete-project-btn");
+  const taskList = document.getElementById("task-list");
 
   // **🧹 Usuwanie poprzednich komunikatów**
   document.querySelector(".no-project")?.remove();
   document.querySelector(".create-project")?.remove();
+  taskList.innerHTML = ""; // 🛑 Usuwamy poprzednie zadania!
 
   let project;
 

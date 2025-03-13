@@ -2,6 +2,7 @@ import getLocalStorage from "./getLocalStorage";
 import setLocalStorage from "./setLocalStorage";
 import renderProject from "./renderProject";
 import openProject from "./openProject";
+import renderCalendar from "./calendarView";
 
 const deleteProject = () => {
   const projects = getLocalStorage("projects");
@@ -15,6 +16,7 @@ const deleteProject = () => {
   projectList.innerHTML = "";
   openProject();
   filteredProjects.forEach((project) => renderProject(project));
+  renderCalendar(new Date());
 };
 
 export default deleteProject;
