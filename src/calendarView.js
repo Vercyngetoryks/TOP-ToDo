@@ -61,10 +61,6 @@ const renderMonthView = (date, grid) => {
           if (task.date === formattedDate) {
             tasksForDay.push(task);
             task.projectName = project.name; // Dodaj nazwę projektu do taska
-            // const taskElement = document.createElement("p");
-            // taskElement.classList.add("calendar-task");
-            // taskElement.textContent = `${project.name}: ${task.name}`;
-            // dayElement.appendChild(taskElement);
           }
         });
       });
@@ -85,7 +81,14 @@ const renderTasksInDay = (dayElement, tasks) => {
   const dayNumber = parseInt(dayElement.textContent, 10);
   const fullDate = new Date(currentDate);
   fullDate.setDate(dayNumber); // Ustawiamy numer dnia w bieżącym miesiącu i roku
-  dayElement.innerHTML = format(fullDate, "d"); // Resetujemy i ustawiamy dzień
+  // 🔹 Tworzymy span dla numeru dnia
+  const dayNumberSpan = document.createElement("span");
+  dayNumberSpan.classList.add("day-number");
+  dayNumberSpan.textContent = format(fullDate, "d"); // Ustawiamy numer dnia
+
+  // Czyścimy dayElement i dodajemy numer dnia
+  dayElement.innerHTML = "";
+  dayElement.appendChild(dayNumberSpan);
 
   const taskLimit = 2; // Maksymalnie 2 widoczne taski
   tasks.slice(0, taskLimit).forEach((task) => {
@@ -95,7 +98,23 @@ const renderTasksInDay = (dayElement, tasks) => {
     taskItem.textContent = `${task.projectName}: ${task.name}`;
     dayElement.appendChild(taskItem);
   });
-
+  if (tasks.length > 0) {
+    const taskDotContainer = document.createElement("div");
+    taskDotContainer.classList.add("task-dot-container");
+    tasks.forEach((task) => {
+      const taskDot = document.createElement("span");
+      taskDot.classList.add("task-dot");
+      if (task.priority === "high") {
+        taskDot.style.backgroundColor = "red";
+      } else if (task.priority === "medium") {
+        taskDot.style.backgroundColor = "orange";
+      } else {
+        taskDot.style.backgroundColor = "green";
+      }
+      taskDotContainer.appendChild(taskDot);
+    });
+    dayElement.appendChild(taskDotContainer);
+  }
   if (tasks.length > taskLimit) {
     const showMoreBtn = document.createElement("button");
     showMoreBtn.textContent = `+${tasks.length - taskLimit} more`;
